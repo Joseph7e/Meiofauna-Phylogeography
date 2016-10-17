@@ -1,0 +1,32 @@
+### Simple 16S dataset pipe ####
+
+#MAKE SURE SAMPLE NAME PREFIXS ARE UNIQUE #here I am removing the 'Sample_' from the beginning of each
+rename -vn 's/Sample_(.*)/$1_/' * 
+
+
+## PREP SAMPLES
+multiple_split_libraries_fastq.py -i ./ --remove_filepath_in_name --include_input_dir_path -o output_split_libraries
+
+### ASSIGN TAXONOMY
+pick_closed_reference_otus.py -i output_split_libraries/seqs.fna -s -o pick_references_output
+
+### CONSTRUCT PLOTS
+summarize_taxa_through_plots.py -i pick_references_output/otu_table.biom -o taxa_plots
+
+
+
+### FOR EUKARYOTES
+
+### DOWNLOAD REFERENCE FILES from https://www.arb-silva.de/no_cache/download/archive/current/Exports/
+
+wget 'https://www.arb-silva.de/fileadmin/silva_databases/qiime/Silva_111_release.tgz'
+unzip it
+
+###Rename and prep samples same as 16S
+
+### ASSIGN TAXONOMY
+##only difference is poiting toward sthe correct reference files (remove -s option ???)
+pick_closed_reference_otus.py -i output_split_libraries/seqs.fna -o pick_references_output -r ~/databases/Silva_111_post/eukaryotes_only/rep_set_euks/97_Silva_111_rep_set_euk.fasta -t ~/databases/Silva_111_post/eukaryotes_only/taxonomy_euks/97_Silva_111_taxa_map_euks.txt
+
+### CONSTRUCT PLOTS
+#as above
