@@ -27,6 +27,8 @@ unzip it
 ### ASSIGN TAXONOMY
 ##only difference is poiting toward sthe correct reference files (remove -s option ???)
 pick_closed_reference_otus.py -i output_split_libraries/seqs.fna -o pick_references_output -r ~/databases/Silva_111_post/eukaryotes_only/rep_set_euks/97_Silva_111_rep_set_euk.fasta -t ~/databases/Silva_111_post/eukaryotes_only/taxonomy_euks/97_Silva_111_taxa_map_euks.txt
+OR
+pick_closed_reference_otus.py -i output_split_libraries/seqs.fna -o pick_references_output_other_dataset -r ~/../airjordan/Silva119_release/rep_set_eukaryotes/97/Silva_119_rep_set97_18S.fna -t ~/../airjordan/Silva119_release/taxonomy_eukaryotes/97/taxonomy_97_all_levels_18S.txt
 
 ### CONSTRUCT PLOTS
 #as above
