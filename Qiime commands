@@ -3,6 +3,8 @@
 #MAKE SURE SAMPLE NAME PREFIXS ARE UNIQUE #here I am removing the 'Sample_' from the beginning of each
 rename -vn 's/Sample_(.*)/$1_/' * 
 
+#multiple_join_paired_ends.py: supports joining paired ends for already-demultiplexed reads provided in multiple fastq files.
+multiple_join_paired_ends.py -i ./ -o output_join_paired --include_input_dir_path --remove_filepath_in_name
 
 ## PREP SAMPLES
 multiple_split_libraries_fastq.py -i ./ --remove_filepath_in_name --include_input_dir_path -o output_split_libraries
@@ -29,6 +31,8 @@ unzip it
 pick_closed_reference_otus.py -i output_split_libraries/seqs.fna -o pick_references_output -r ~/databases/Silva_111_post/eukaryotes_only/rep_set_euks/97_Silva_111_rep_set_euk.fasta -t ~/databases/Silva_111_post/eukaryotes_only/taxonomy_euks/97_Silva_111_taxa_map_euks.txt
 OR
 pick_closed_reference_otus.py -i output_split_libraries/seqs.fna -o pick_references_output_other_dataset -r ~/../airjordan/Silva119_release/rep_set_eukaryotes/97/Silva_119_rep_set97_18S.fna -t ~/../airjordan/Silva119_release/taxonomy_eukaryotes/97/taxonomy_97_all_levels_18S.txt
+OR
+pick_open_reference_otus.py -i output_split_libraries/seqs.fna -o pick_references_output_open -r ~/databases/Silva_111_post/eukaryotes_only/rep_set_euks/97_Silva_111_rep_set_euk.fasta
 
 ### CONSTRUCT PLOTS
 #as above
