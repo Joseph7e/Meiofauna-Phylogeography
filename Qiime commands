@@ -20,11 +20,12 @@ summarize_taxa_through_plots.py -i pick_references_output/otu_table.biom -o taxa
 ### FOR EUKARYOTES
 
 ### DOWNLOAD REFERENCE FILES from https://www.arb-silva.de/no_cache/download/archive/current/Exports/
-
+##THIS IS ALREADY DONE
 wget 'https://www.arb-silva.de/fileadmin/silva_databases/qiime/Silva_111_release.tgz'
 unzip it
 
 ###Rename and prep samples same as 16S
+rename -vn 's/Sample_(.*)/$1_/' * #the n is for testing, remove to execute
 
 ### ASSIGN TAXONOMY
 ##only difference is poiting toward sthe correct reference files (remove -s option ???)
@@ -36,3 +37,4 @@ pick_open_reference_otus.py -i output_split_libraries/seqs.fna -o pick_reference
 
 ### CONSTRUCT PLOTS
 #as above
+summarize_taxa_through_plots.py -i pick_references_output/otu_table.biom -o taxa_plots
