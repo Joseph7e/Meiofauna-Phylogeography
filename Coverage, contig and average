@@ -1,0 +1,6 @@
+#generate list of contig headers and lengths
+bioawk -c fastx '{ print $name, length($seq) }' < contigs.fasta > genome.txt
+
+#Calculate per base coverage
+genomeCoverageBed -ibam sortedBamFile.bam -g genome.txt > coverage.txt
+
