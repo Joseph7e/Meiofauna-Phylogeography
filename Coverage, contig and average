@@ -1,6 +1,21 @@
+NOTE: MUST HAVE A BAM FILE, see 
+
+
 #generate list of contig headers and lengths
 bioawk -c fastx '{ print $name, length($seq) }' < contigs.fasta > genome.txt
 
 #Calculate per base coverage
 genomeCoverageBed -ibam sortedBamFile.bam -g genome.txt > coverage.txt
 
+#Calculate per contig coverage using per base coverage
+coverage_per_contig.py coverage.txt
+
+#Calculate weighted average coverage
+awk '{sum += $2} END {print sum}' coverage_by_sequence.txt
+awk '{print $2 * $3}' coverage_by_sequence.txt | awk '{sum += $1} END {print sum}'
+#coverage = output#2/output#1
+
+#OR directly from txt file
+awk -F'\t' '{print $4}' coverage.txt | uniq | awk '{sum += $1} END {print sum}'
+awk '{print $2 * $3}' coverage.txt | awk '{sum += $1} END {print sum}'
+#coverage = output#2/output#1
