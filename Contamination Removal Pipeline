@@ -27,6 +27,9 @@ extract_nodes_exact_matches.py <contig_file> <node_list> [output_name]
 #map and extract mapped and unmapped reads
 bowtie2
 
+nohup bowtie2 --un-conc-gz sample_a8_new_reads/ --al-conc-gz sample_a8_new_reads/ --al-gz sample_a8_new_reads/ --un-gz sample_a8_new_reads/ -x ../ALL_CONTIGS/sample_at8 -1 ../READS/a8_1.fastq.gz -2 ../READS/a8_2.fastq.gz -p 20 -S sample_a8.sam &
+
+
 #assemble as desired
 
 
