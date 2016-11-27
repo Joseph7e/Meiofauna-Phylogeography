@@ -1,0 +1,6 @@
+#Build a reference set of closely related organism
+
+#blast set against genome to identify contig of interest
+
+#cut to best hits for each refernece
+
