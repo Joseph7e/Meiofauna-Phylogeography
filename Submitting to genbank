@@ -1,0 +1,9 @@
+#beginning in fresh directory with final assembly (after bacterial and mitochondria removal)
+
+#rename all the headers
+rename_header.py [fasta_file]
+
+#check the meaning of the N's. if you cant find the meaning in the assembly protocol try this....
+#if they are spread out than carry on, if they are all specific lengths, i.e 100. edit commands after
+grep -o -P '[N]*' final_assembly_no_bacteria.fasta | awk '{ print length($0); }' | sort | uniq -c
+
