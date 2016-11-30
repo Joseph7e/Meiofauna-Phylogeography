@@ -24,6 +24,12 @@ awk -F'\t' '{if ($6 == " Arthropoda ") print $0;}' sample_a2.parsed.json | less 
 #generate fasta of wanted nodes
 extract_nodes_exact_matches.py <contig_file> <node_list> [output_name]
 
+
+
+
+######## See new script for read extraction
+
+
 #map and extract mapped and unmapped reads
 bowtie2
 
