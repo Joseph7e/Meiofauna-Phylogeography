@@ -8,8 +8,8 @@
 ##### tblastn version coming soon.
 blob_blast.sh <contigs.fasta>
 
-# STEP 2: Assign taxonomy and parse for best match, assumes coverage known from spades header (output = parsed_json & blob_json)
-#### ADD COVERAGE FILE FOR NONE SPADES ASSEMBLY
+# STEP 2: Assign taxonomy and parse for best match, (output = parsed_json & blob_json)
+#### ADD COVERAGE FILE FOR NONE SPADES ASSEMBLY, currently assumes coverage known from spades header
 blob_create_json.sh <contigs.fasta> <blast_file> 
 
 # STEP 3: construct list of non-bacterial nodes
@@ -34,7 +34,7 @@ awk -F'\t' '{if ($6 == " Arthropoda ") print $0;}' sample_a2.parsed.json | less 
 extract_nodes_exact_matches.py <contig_file> <node_list> [output_name]
 
 
-# STEP 5: extract mapped reads for reassembley (or just use the fasta above for subsequent analyses)
+# STEP 5: extract mapped reads for reassembley (or just use the fasta above I have seen better results both ways)
 Extract_mapped_reads_and_more.sh <filtered_contigs> <forward_reads> <reverse_reads>
 
 ##### or: map and extract mapped and unmapped reads with bowtie
