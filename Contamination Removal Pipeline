@@ -1,41 +1,48 @@
-#Bacterial Removal
+##Pipeline for contamination removal
+#Joseph Sevigny
+#December 1st 2016
+#HCGS
 
 
-# run blastn against nucleotide databas
+# STEP 1: Run blastn against nucleotide databas (output = blast_file)
+##### tblastn version coming soon.
 blob_blast.sh <contigs.fasta>
 
-#assign taxonomy and parse for best match, assumes coverage known
-blob_create_json.sh <contigs.fasta> <blob_blast_output> 
+# STEP 2: Assign taxonomy and parse for best match, assumes coverage known from spades header (output = parsed_json & blob_json)
+#### ADD COVERAGE FILE FOR NONE SPADES ASSEMBLY
+blob_create_json.sh <contigs.fasta> <blast_file> 
 
-#construct list of non-bacterial nodes
-awk -F'\t' '{if ($5 != " Bacteria ") print $1}' sample_a2.parsed.json > non_bacterial_nodes.txt
+# STEP 3: construct list of non-bacterial nodes
+###### THIS STEP WILL VARY DEPENDING ON HOW STRINGENT YOU WILL WANT TO BE.
 
-#to gather_list of non_bacteria_groups (or bacterial) do:
+###### example1: nodes of all none bacteria
+awk -F'\t' '{if ($5 != " Bacteria ") print $1}' parsed_json > non_bacterial_nodes.txt
 
-awk -F'\t' '{if ($5 != " Bacteria ") print $6;}' sample_a2.parsed.json | sort | uniq -c
+###### example 2: to gather_list of non_bacterial_groups do:
+awk -F'\t' '{if ($5 != " Bacteria ") print $6;}' parsed_json | sort | uniq -c
 #or
 awk -F'\t' '{print $6}' sample_a2.parsed.json | sort | uniq -c
+#then decide what groups to remove with first command
+awk -F'\t' '{if ($5 != " Group ") print $1}' parsed_json > non_bacterial_nodes.txt
 
-#to view all stuff about a group use, with group replaced with Arthropoda
+#to view all stuff about a group use (replace Arthropoda with group of interest)
 awk -F'\t' '{if ($6 == " Arthropoda ") print $0;}' sample_a2.parsed.json | less -S
 
-#generate fasta of wanted nodes
+###### example 3:filter based on gc and coverage etc etc
+
+# STEP 4: generate fasta of wanted nodes
 extract_nodes_exact_matches.py <contig_file> <node_list> [output_name]
 
 
-######## See new script for read extraction
+# STEP 5: extract mapped reads for reassembley (or just use the fasta above for subsequent analyses)
+Extract_mapped_reads_and_more.sh <filtered_contigs> <forward_reads> <reverse_reads>
+
+##### or: map and extract mapped and unmapped reads with bowtie
+mkdir new_reads
+bowtie2-build -h
+bowtie2 --un-conc-gz new_reads/ --al-conc-gz new_reads/ --al-gz new_reads/ --un-gz new_reads/ -x <filtered_contig_bowtie_database> -1 <forward_reads> -2 <reverse_reads> -p 20 -S output.sam
+##remove sam file or convert to bam for storage
 
 
-#map and extract mapped and unmapped reads
-bowtie2
-
-nohup bowtie2 --un-conc-gz sample_a8_new_reads/ --al-conc-gz sample_a8_new_reads/ --al-gz sample_a8_new_reads/ --un-gz sample_a8_new_reads/ -x ../ALL_CONTIGS/sample_at8 -1 ../READS/a8_1.fastq.gz -2 ../READS/a8_2.fastq.gz -p 20 -S sample_a8.sam &
-
-
-#assemble as desired
-
-
-
-####CHECK COVERAGE
-
+####BONUS CHECK COVERAGE (already done with Extract_mapped_reads_and_more.sh)
 samtools depth  *bamfile*  |  awk '{sum+=$3} END { print "Average = ",sum/NR}' #Replace NR with genome size for better estimate
