@@ -23,7 +23,7 @@ awk -F'\t' '{if ($5 != " Bacteria ") print $6;}' parsed_json | sort | uniq -c
 #or
 awk -F'\t' '{print $6}' sample_a2.parsed.json | sort | uniq -c
 #then decide what groups to remove with first command
-awk -F'\t' '{if ($5 != " Group ") print $1}' parsed_json > non_bacterial_nodes.txt
+awk -F'\t' '{if ($5 != " Group ") print $1}' parsed_json > non_group_nodes.txt
 
 #to view all stuff about a group use (replace Arthropoda with group of interest)
 awk -F'\t' '{if ($6 == " Arthropoda ") print $0;}' sample_a2.parsed.json | less -S
