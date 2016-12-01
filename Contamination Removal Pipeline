@@ -13,7 +13,7 @@ blob_blast.sh <contigs.fasta>
 blob_create_json.sh <contigs.fasta> <blast_file> 
 
 # STEP 3: construct list of non-bacterial nodes
-###### THIS STEP WILL VARY DEPENDING ON HOW STRINGENT YOU WILL WANT TO BE.
+###### THIS STEP WILL VARY DEPENDING ON HOW STRINGENT YOU WANT TO BE.
 
 ###### example1: nodes of all none bacteria
 awk -F'\t' '{if ($5 != " Bacteria ") print $1}' parsed_json > non_bacterial_nodes.txt
