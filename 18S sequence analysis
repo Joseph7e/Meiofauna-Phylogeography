@@ -1,0 +1,22 @@
+###18S Sequence analysis
+
+STEP1: As with qiime, prepare seqs.fna (add merging if you wish but it sucks)
+
+#MAKE SURE SAMPLE NAME PREFIXS ARE UNIQUE #here I am removing the 'Sample_' from the beginning of each
+rename -vn 's/Sample_(.*)/$1_/' * 
+
+#multiple_join_paired_ends.py: supports joining paired ends for already-demultiplexed reads provided in multiple fastq files.
+multiple_join_paired_ends.py -i ./ -o output_join_paired --include_input_dir_path --remove_filepath_in_name
+
+## PREP SAMPLES
+multiple_split_libraries_fastq.py -i ./ --remove_filepath_in_name --include_input_dir_path -o output_split_libraries
+
+#STEP 2: blast sequences against any database that you can link to taxonomy
+sequences='output_split_libraries/seqs.fna'
+blast_out='blast_seqs.6'
+blastn -query $sequences -db /genome/joseph7e/databases/SILVA123_QIIME_release/rep_set/rep_set_18S_only/97/database -outfmt 6 -out $blast_out
+
+#STEP 3: link sequences into otus
+pick_otus.py -i output_split_libraries/seqs.fna -o picked_otus_default --enable_rev_strand_match -d
+
+#STEP4: assign taxonomy and 
