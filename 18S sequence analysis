@@ -16,9 +16,11 @@ sequences='output_split_libraries/seqs.fna'
 blast_out='blast_seqs.6'
 blastn -query $sequences -db /genome/joseph7e/databases/SILVA123_QIIME_release/rep_set/rep_set_18S_only/97/database -outfmt 6 -out $blast_out
 
-#STEP 3: link sequences into otus
+#STEP 3: pick otus
 pick_otus.py -i output_split_libraries/seqs.fna -o picked_otus_default --enable_rev_strand_match
 
-#STEP4: assign taxonomy 
+#STEP4: assign taxonomy and link to otus
+
+better_qiime.py <taxonomy_database> <blast_file> <otus.txt>
 
 #STEP5: visualize data
