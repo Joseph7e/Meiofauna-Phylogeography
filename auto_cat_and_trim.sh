@@ -5,6 +5,9 @@
 
 #Usage: auto_cat_and_trim.sh path/to/dir1 path/to/dir2 ....
 
+#skewer -l 25 -m pe -o skewer --mean-quality 2 --end-quality 2 -t 30 -x /opt/Trimmomatic-0.32/adapters/NexteraPE-PE.fa combined-1.fastq.gz combined-2.fastq.gz
+
+
 for dir in $@
 do
         cat $dir/*R1*.fastq.gz > $dir/combined_1.fastq.gz
