@@ -1,0 +1,34 @@
+SEE EXAMPLE PARAMETERS AND MAPPING_FILES (include parameters file)
+
+#link to hollies tutorial
+https://github.com/BikLab/BITMaB-workshop/blob/master/QIIME-metabarcoding-tutorial-already-demultiplexed-fastqs.md
+
+#this outline is customized for data from demultiplexed data from HCGS
+
+###RENAME FILENAMES TO FIT CONVENTION (NO '_')
+rename -vn 's/Sample_(.*)/$1_/' * 
+
+###Make sure forward read is labelled R1.fastq.gz or whatever and reverse is labbeled R2.fastq.gz
+mkdir index_reads
+mv */*R2* index_reads/
+auto_swap_reverse.py */ #this will swap R3 into R2 as demultiplexing sometimes messes it up. Tread carefully.
+
+
+###CONSTRUCT MAPPING FILE (TAB DELIMINATED) #barcodes can be found in deultiplexing report or raw read names
+##SampleID	BarcodeSequence	ReversePrimer	optional_Matrix	optional_Description optional_etc
+
+### Join paired end reads
+multiple_join_paired_ends.py -i ./ -o output_join_paired --include_input_dir_path --remove_filepath_in_name -p parameters.txt --read1_indicator R1 --read2_indicator R2
+
+#remove empty files (needed for next step)
+find /path/to/output_join_paired -empty -type f -delete
+
+#create seqs.fna
+multiple_split_libraries_fastq.py -i /path/to/output_join_paired --remove_filepath_in_name --include_input_dir_path -o output_split_libraries
+
+#truncate reverse primers
+truncate_reverse_primer.py -f seqs.fna -m mapping_file.txt -o truncate_reverse_primers
+
+####DENOVO OTU PICKING AND TAXONOMY ASSIGNMENT (JOE VERSION)
+
+
