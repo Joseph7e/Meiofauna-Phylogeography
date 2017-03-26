@@ -1,6 +1,9 @@
 
 #uniq by column
 
+# Check file usage for a specific path
+ df -P ./
+
 
 #post to the web for download
 
