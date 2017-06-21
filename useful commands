@@ -19,3 +19,6 @@ http://cobb.unh.edu/wolbachia_sample3.fasta.gz
 
 # sort alpha then numerically in the same word!!!!!
 
+# summary of all buscos
+more */short* | grep -v '#' | grep -v 'C:' | sed 's/ /_/g' | sed '/^$/d' | awk -F'\t' '{print $1, $2}' | sed ':a;N;$!ba;s/\n/ /g' | sed 's/::::::::::::::/\n/g' | sed ':a;N;$!ba;s/\n/ /g' | sed 's/978/978\n/g' | awk -F'_' '{print $8}' | sed 's/.txt//g'
+
