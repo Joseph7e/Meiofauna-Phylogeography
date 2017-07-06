@@ -13,6 +13,14 @@ cd /var/www/html/
 sudo scp joseph7e@brain.sr.unh.edu:/home/genome/joseph7e/anguina/wolbachia/wolbachia_sample3.fasta ./
 gzip wolbachia_sample3.fasta
 
+
+#or create a link to big files
+cd /var/www/html/
+sudo ln -s /data2/sequencer/170609_SN7001360_0365_AHFJ7LBCXY_12MerEyualemPL116S/Project_EyualemPL116S/ ./
+
+
+
+
 #files are here,
 http://cobb.unh.edu/wolbachia_sample3.fasta.gz
 
