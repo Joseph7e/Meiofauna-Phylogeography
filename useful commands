@@ -19,6 +19,13 @@ cd /var/www/html/
 sudo ln -s /data2/sequencer/170609_SN7001360_0365_AHFJ7LBCXY_12MerEyualemPL116S/Project_EyualemPL116S/ ./
 
 
+# Host data on condor
+ON home dir /net/nfs/condor/raid2/hcgs/joseph7e, make a new folder and give it chmod -R 755
+sudo ln -s /net/nfs/condor/raid2/hcgs/joseph7e/new_folder/ ./
+
+
+
+
 
 
 #files are here,
